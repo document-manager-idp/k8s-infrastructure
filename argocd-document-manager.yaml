@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: microservices-app
+  name: document-manager
   namespace: argocd
 spec:
   project: default
