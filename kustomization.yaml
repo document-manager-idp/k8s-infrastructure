@@ -1,8 +1,8 @@
 resources:
   - auth-service/deployment.yaml
   - auth-service/service.yaml
-  - business-logic-service/deployment.yaml
-  - business-logic-service/service.yaml
+  - business-logic/deployment.yaml
+  - business-logic/service.yaml
   - db-service/deployment.yaml
   - db-service/service.yaml
   - opensearch/deployment.yaml
