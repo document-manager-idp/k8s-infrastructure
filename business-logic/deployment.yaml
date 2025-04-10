@@ -27,4 +27,4 @@ spec:
             - name: AUTH_HOST
               value: document-manager_auth-service
             - name: AUTH_PORT
-              value: 3000
+              value: "3000"

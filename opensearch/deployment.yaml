@@ -23,6 +23,10 @@ spec:
           env:
             - name: discovery.type
               value: single-node
+      volumes:
+        - name: opensearch-storage
+          persistentVolumeClaim:
+            claimName: opensearch-storage
 ---
 apiVersion: apps/v1
 kind: Deployment
