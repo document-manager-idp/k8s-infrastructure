@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opensearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opensearch
+  template:
+    metadata:
+      labels:
+        app: opensearch
+    spec:
+      containers:
+        - name: opensearch
+          image: opensearchproject/opensearch:latest
+          ports:
+            - containerPort: 9200
+          volumeMounts:
+            - mountPath: /usr/share/opensearch/data
+              name: opensearch-storage
+          env:
+            - name: discovery.type
+              value: single-node
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opensearch-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opensearch-dashboard
+  template:
+    metadata:
+      labels:
+        app: opensearch-dashboard
+    spec:
+      containers:
+        - name: dashboard
+          image: opensearchproject/opensearch-dashboards:latest
+          ports:
+            - containerPort: 5601
+          env:
+            - name: OPENSEARCH_HOSTS
+              value: http://opensearch:9200

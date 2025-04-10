@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: business-logic-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: business-logic-service
+  template:
+    metadata:
+      labels:
+        app: business-logic-service
+    spec:
+      containers:
+        - name: business-logic-service
+          image: ghcr.io/document-manager-idp/business-logic:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: FLASK_ENV
+              value: production
+            - name: HOSTNAME
+              value: 0.0.0.0
+            - name: PORT
+              value: "5000"
+            - name: AUTH_HOST
+              value: document-manager_auth-service
+            - name: AUTH_PORT
+              value: 3000

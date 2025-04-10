@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: database-service
+  template:
+    metadata:
+      labels:
+        app: database-service
+    spec:
+      containers:
+        - name: database-service
+          image: yourregistry/database-service:latest
+          ports:
+            - containerPort: 5700
+          env:
+            - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+              value: ${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+            - name: OPENSEARCH_ADDRESS
+              value: localhost

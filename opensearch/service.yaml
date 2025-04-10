@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: opensearch-service
+spec:
+  selector:
+    app: opensearch
+  ports:
+    - port: 9200
+      targetPort: 9200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opensearch-dashboard
+spec:
+  selector:
+    app: opensearch-dashboard
+  ports:
+    - port: 5601
+      targetPort: 5601
+  type: ClusterIP
