@@ -1,0 +1,11 @@
+resources:
+  - auth-service/deployment.yaml
+  - auth-service/service.yaml
+  - business-logic-service/deployment.yaml
+  - business-logic-service/service.yaml
+  - database-service/deployment.yaml
+  - database-service/service.yaml
+  - opensearch/deployment.yaml
+  - opensearch/service.yaml
+  - opensearch/persistent-volume.yaml
+  - ingress.yaml
