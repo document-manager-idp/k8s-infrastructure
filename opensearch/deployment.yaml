@@ -31,7 +31,7 @@ spec:
                   fieldPath: metadata.name
             # List the DNS names of the pods using the headless service.
             - name: discovery.seed_hosts
-              value: "opensearch-0.opensearch,opensearch-1.opensearch"
+              value: "opensearch-0,opensearch-1"
             - name: cluster.initial_cluster_manager_nodes
               value: "opensearch-0,opensearch-1"
             - name: bootstrap.memory_lock
@@ -82,5 +82,5 @@ spec:
             - containerPort: 5601
           env:
             - name: OPENSEARCH_HOSTS
-              value: '["https://opensearch-0.opensearch:9200", "https://opensearch-1.opensearch:9200"]'
+              value: '["https://opensearch-0:9200", "https://opensearch-1:9200"]'
 
