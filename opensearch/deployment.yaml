@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: opensearch
 spec:
-  replicas: 1
+  serviceName: opensearch
+  replicas: 2
   selector:
     matchLabels:
       app: opensearch
@@ -17,41 +18,69 @@ spec:
           image: opensearchproject/opensearch:latest
           ports:
             - containerPort: 9200
-          volumeMounts:
-            - mountPath: /usr/share/opensearch/data
-              name: opensearch-storage
+              name: rest
+            - containerPort: 9600
+              name: performance
           env:
-            - name: discovery.type
-              value: single-node
+            - name: cluster.name
+              value: opensearch-cluster
+            # Use the pod’s name as the node name
+            - name: node.name
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            # List the DNS names of the pods using the headless service.
+            - name: discovery.seed_hosts
+              value: "opensearch-0.opensearch,opensearch-1.opensearch"
+            - name: cluster.initial_cluster_manager_nodes
+              value: "opensearch-0,opensearch-1"
+            - name: bootstrap.memory_lock
+              value: "true"
+            - name: OPENSEARCH_JAVA_OPTS
+              value: "-Xms512m -Xmx512m"
             - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: opensearch-initial-admin-password
-                  key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
-      volumes:
-        - name: opensearch-storage
-          persistentVolumeClaim:
-            claimName: opensearch-storage
+                  name: opensearch-secret
+                  key: admin-password
+          volumeMounts:
+            - name: opensearch-data
+              mountPath: /usr/share/opensearch/data
+          securityContext:
+            # Ensure the container is allowed to lock memory (similar to setting ulimits)
+            capabilities:
+              add: ["IPC_LOCK"]
+      securityContext:
+        fsGroup: 1000
+  volumeClaimTemplates:
+    - metadata:
+        name: opensearch-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 5Gi  # Adjust storage size as needed
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: opensearch-dashboard
+  name: opensearch-dashboards
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: opensearch-dashboard
+      app: opensearch-dashboards
   template:
     metadata:
       labels:
-        app: opensearch-dashboard
+        app: opensearch-dashboards
     spec:
       containers:
-        - name: dashboard
+        - name: opensearch-dashboards
           image: opensearchproject/opensearch-dashboards:latest
           ports:
             - containerPort: 5601
           env:
             - name: OPENSEARCH_HOSTS
-              value: https://opensearch:9200
+              value: '["https://opensearch-0.opensearch:9200", "https://opensearch-1.opensearch:9200"]'
+

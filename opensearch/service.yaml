@@ -2,12 +2,17 @@ apiVersion: v1
 kind: Service
 metadata:
   name: opensearch-service
+  labels:
+    app: opensearch
 spec:
+  clusterIP: None
   selector:
     app: opensearch
   ports:
-    - port: 9200
-      targetPort: 9200
+    - name: rest
+      port: 9200
+    - name: performance
+      port: 9600
 ---
 apiVersion: v1
 kind: Service
@@ -17,6 +22,7 @@ spec:
   selector:
     app: opensearch-dashboard
   ports:
-    - port: 5601
+    - name: http
+      port: 5601
       targetPort: 5601
-  type: ClusterIP
+  type: LoadBalancer
