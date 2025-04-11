@@ -41,8 +41,8 @@ spec:
             - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: opensearch-secret
-                  key: admin-password
+                  name: opensearch-initial-admin-password
+                  key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
           volumeMounts:
             - name: opensearch-data
               mountPath: /usr/share/opensearch/data
