@@ -54,4 +54,4 @@ spec:
             - containerPort: 5601
           env:
             - name: OPENSEARCH_HOSTS
-              value: http://opensearch:9200
+              value: https://opensearch:9200
