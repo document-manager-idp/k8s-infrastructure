@@ -23,6 +23,11 @@ spec:
           env:
             - name: discovery.type
               value: single-node
+            - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: opensearch-initial-admin-password
+                  key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
       volumes:
         - name: opensearch-storage
           persistentVolumeClaim:

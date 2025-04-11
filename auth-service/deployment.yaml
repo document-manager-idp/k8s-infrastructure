@@ -25,6 +25,9 @@ spec:
             - name: PORT
               value: "3000"
             - name: REDIRECT_URL
-              value: http://localhost:8000
+              value: http://localhost
             - name: COGNITO_SECRET
-              value: ${COGNITO_SECRET}
+              valueFrom:
+                secretKeyRef:
+                  name: cognito-secret
+                  key: COGNITO_SECRET
