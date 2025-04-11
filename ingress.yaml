@@ -23,3 +23,10 @@ spec:
                 name: business-logic-service
                 port:
                   number: 5000
+          - path: /dashboard
+            pathType: Prefix
+            backend:
+              service:
+                name: opensearch-dashboard
+                port:
+                  number: 5601

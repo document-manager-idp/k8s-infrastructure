@@ -19,6 +19,9 @@ spec:
             - containerPort: 5700
           env:
             - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
-              value: ${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+              valueFrom:
+                secretKeyRef:
+                  name: opensearch-initial-admin-password
+                  key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
             - name: OPENSEARCH_ADDRESS
               value: localhost
