@@ -29,6 +29,6 @@ spec:
             - name: AUTH_PORT
               value: "3000"
             - name: DB_HOST
-              value: db-service
+              value: database-service
             - name: DB_PORT
               value: "5700"
