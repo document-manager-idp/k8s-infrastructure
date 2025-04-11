@@ -33,7 +33,7 @@ spec:
             - name: discovery.seed_hosts
               value: "opensearch-0.opensearch,opensearch-1.opensearch"
             - name: cluster.initial_cluster_manager_nodes
-              value: "opensearch-0,opensearch-1"
+              value: "opensearch-0.opensearch,opensearch-1.opensearch"
             - name: bootstrap.memory_lock
               value: "true"
             - name: OPENSEARCH_JAVA_OPTS
