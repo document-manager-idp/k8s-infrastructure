@@ -1,28 +1,14 @@
-# Kubernetes Infrastructure for *Document Manager*
+# Kubernetes Infrastructure for *Document Manager*
 
-This repository contains the declarative Kubernetes manifests that deploy the **Document Manager** platform:
+This repository contains the declarative Kubernetes manifests that deploy the **Document Manager** platform:
 
-* **Auth Service** – Node.js API for authentication and Cognito integration  
-* **Business‑Logic Service** – Python / Flask API that mediates between the UI, Auth and DB layers  
-* **DB Service** – Python / Flask wrapper around OpenSearch for vector‑enabled storage and search  
-* **OpenSearch + Dashboards** – Backend datastore (stateful set) with an optional UI  
+* **Auth Service** – Node.js API for authentication and Cognito integration  
+* **Business‑Logic Service** – Python / Flask API that mediates between the UI, Auth and DB layers  
+* **DB Service** – Python / Flask wrapper around OpenSearch for vector‑enabled storage and search  
+* **OpenSearch + Dashboards** – Backend datastore (stateful set) with an optional UI  
 * **Ingress** – Single public entry‑point that routes traffic to the above services  
-* **Argo CD Application** – GitOps controller that keeps the cluster in sync with `main`  
+* **Argo CD Application** – GitOps controller that keeps the cluster in sync with `main`  
 * **Kustomize** – Composition layer that stitches the individual manifests together
-
----
-
-## Technologies in use
-
-| Category                | Stack                                                   |
-|-------------------------|---------------------------------------------------------|
-| Container orchestration | **Kubernetes**                                          |
-| GitOps                  | **Argo CD** (`Application` manifest provided)           |
-| Manifest composition    | **Kustomize** (native `kubectl -k`)                     |
-| Data layer              | **OpenSearch** (stateful set with PVC)                  |
-| API services            | Node.js 18, Python 3 (Flask)                            |
-| Traffic routing         | **NGINX Ingress Controller**                            |
-| Storage                 | Dynamic **PersistentVolumeClaim** for OpenSearch |
 
 ---
 
@@ -54,8 +40,8 @@ kubectl create secret generic opensearch-initial-admin-password \
 kubectl apply -f argocd-document-manager.yaml
 ```
 
-3. In the Argo CD UI, sync the **document-manager** application.  
-   Argo CD will create / replace all resources and keep them in sync with the `main` branch.
+3. In the Argo CD UI, sync the **document-manager** application.  
+   Argo CD will create / replace all resources and keep them in sync with the `main` branch.
 
 Kustomize expands `kustomization.yaml`, which in turn pulls in every deployment, service, PVC and the ingress.
 
@@ -63,11 +49,11 @@ Kustomize expands `kustomization.yaml`, which in turn pulls in every deployment,
 
 ## Access points
 
-| URL path | Backend service | Notes |
-|----------|-----------------|-------|
-| `/auth` | **auth-service** on port 3000 |
-| `/api` | **business‑logic-service** on port 5000 |
-| `/dashboard` | **opensearch‑dashboards** on port 5601 |
+| URL path | Backend service |
+|----------|-----------------|
+| `/auth` | **auth-service** on port 3000 |
+| `/api` | **business‑logic-service** on port 5000 |
+| `/dashboard` | **opensearch‑dashboards** on port 5601 |
 
 These routes are configured in `ingress.yaml`.  
 
