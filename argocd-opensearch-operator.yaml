@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://opensearch-project.github.io/opensearch-k8s-operator/
     chart: opensearch-operator
-    targetRevision: 2.9.0        # pin the exact operator version you need
+    targetRevision: 2.7.0        # pin the exact operator version you need
   destination:
     server: https://kubernetes.default.svc
     namespace: opensearch-operator-system   # chart default
