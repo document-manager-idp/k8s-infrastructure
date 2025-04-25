@@ -27,4 +27,5 @@ spec:
   security:
     config:
       # reuse the secret you already create in README
-      adminCredentialsSecretName: opensearch-initial-admin-password
+      adminCredentialsSecretName:
+        name: opensearch-initial-admin-password
