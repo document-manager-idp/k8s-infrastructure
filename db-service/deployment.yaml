@@ -24,4 +24,4 @@ spec:
                   name: opensearch-initial-admin-password
                   key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
             - name: OPENSEARCH_ADDRESS
-              value: opensearch
+              value: opensearch.default.svc

@@ -5,11 +5,7 @@ resources:
   - business-logic/service.yaml
   - db-service/deployment.yaml
   - db-service/service.yaml
-  - opensearch/deployment.yaml
-  - opensearch/service.yaml
-  - opensearch/persistent-volume.yaml
-  - opensearch/dashboards-service.yaml
-  - opensearch/dashboards-deployment.yaml
+  - opensearch/cluster.yaml
   - ingress.yaml
 helmCharts:
   - name: opensearch-operator

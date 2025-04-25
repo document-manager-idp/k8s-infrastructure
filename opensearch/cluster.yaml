@@ -1,0 +1,29 @@
+apiVersion: opensearch.opster.io/v1
+kind: OpenSearchCluster
+metadata:
+  name: opensearch                         # <-- keeps the old service DNS name
+  namespace: default
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"      # sync after the operator
+spec:
+  general:
+    version: 2.14.0                        # bump at will; operator rolls forward :contentReference[oaicite:1]{index=1}
+    serviceName: opensearch                # generates headless & ClusterIP svc
+    httpPort: 9200
+    drainDataNodes: true
+  dashboards:
+    enable: true
+    version: 2.14.0
+  nodePools:
+    - component: cluster-manager
+      replicas: 3
+      roles: ["cluster_manager"]
+      diskSize: 10Gi
+    - component: data
+      replicas: 2
+      roles: ["data","ingest","remote_cluster_client"]
+      diskSize: 20Gi
+  security:
+    config:
+      # reuse the secret you already create in README
+      adminCredentialsSecretName: opensearch-initial-admin-password

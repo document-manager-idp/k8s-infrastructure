@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: opensearch-operator
+  namespace: argocd
+spec:
+  project: default
+  # A Helm chart is the simplest, most up-to-date install method :contentReference[oaicite:0]{index=0}
+  source:
+    repoURL: https://opensearch-project.github.io/opensearch-k8s-operator/
+    chart: opensearch-operator
+    targetRevision: 2.9.0        # pin the exact operator version you need
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: opensearch-operator-system   # chart default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
