@@ -8,4 +8,16 @@ resources:
   - opensearch/deployment.yaml
   - opensearch/service.yaml
   - opensearch/persistent-volume.yaml
+  - opensearch/dashboards-service.yaml
+  - opensearch/dashboards-deployment.yaml
   - ingress.yaml
+helmCharts:
+  - name: opensearch-operator
+    repo: https://opensearch-project.github.io/opensearch-k8s-operator
+    version: 2.7.0
+    releaseName: opensearch-operator
+    namespace: opensearch-operator-system   # will be auto-created
+    includeCRDs: true       # ship CRDs with the chart
+    valuesInline:
+      installCRDs: true
+      useRoleBindings: false

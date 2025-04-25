@@ -1,86 +1,23 @@
-apiVersion: apps/v1
-kind: StatefulSet
+apiVersion: opensearch.opensearch.org/v1
+kind: OpenSearchCluster
 metadata:
-  name: opensearch
+  name: opensearch          # <— keeps the old service names alive
+  namespace: default
 spec:
-  serviceName: opensearch
-  replicas: 2
-  selector:
-    matchLabels:
-      app: opensearch
-  template:
-    metadata:
-      labels:
-        app: opensearch
-    spec:
-      containers:
-        - name: opensearch
-          image: opensearchproject/opensearch:latest
-          ports:
-            - containerPort: 9200
-              name: rest
-            - containerPort: 9600
-              name: performance
-          env:
-            - name: cluster.name
-              value: opensearch-cluster
-            # Use the pod’s name as the node name
-            - name: node.name
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-            # List the DNS names of the pods using the headless service.
-            - name: discovery.seed_hosts
-              value: "opensearch"
-            - name: cluster.initial_cluster_manager_nodes
-              value: "opensearch"
-            - name: bootstrap.memory_lock
-              value: "true"
-            - name: OPENSEARCH_JAVA_OPTS
-              value: "-Xms512m -Xmx512m"
-            - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: opensearch-initial-admin-password
-                  key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
-          volumeMounts:
-            - name: opensearch-data
-              mountPath: /usr/share/opensearch/data
-          securityContext:
-            # Ensure the container is allowed to lock memory (similar to setting ulimits)
-            capabilities:
-              add: ["IPC_LOCK"]
-      securityContext:
-        fsGroup: 1000
-  volumeClaimTemplates:
-    - metadata:
-        name: opensearch-data
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 5Gi  # Adjust storage size as needed
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: opensearch-dashboards
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: opensearch-dashboards
-  template:
-    metadata:
-      labels:
-        app: opensearch-dashboards
-    spec:
-      containers:
-        - name: opensearch-dashboards
-          image: opensearchproject/opensearch-dashboards:latest
-          ports:
-            - containerPort: 5601
-          env:
-            - name: OPENSEARCH_HOSTS
-              value: '["https://opensearch:9200"]'
-
+  general:
+    serviceName: opensearch
+    version: "2.7.0"
+  dashboards:               # UI, replaces the old deployment
+    enable: true            # operator makes a Service called opensearch-dashboards
+    replicas: 1
+  nodePools:
+    - component: cluster-manager
+      replicas: 1
+      roles: ["cluster_manager","data","ingest"]
+      persistence:
+        size: 10Gi
+    - component: data
+      replicas: 1
+      roles: ["data","ingest"]
+      persistence:
+        size: 10Gi
