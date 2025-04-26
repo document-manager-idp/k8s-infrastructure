@@ -11,6 +11,12 @@ spec:
     serviceName: opensearch-service                # generates headless & ClusterIP svc
     httpPort: 9200
     drainDataNodes: true
+    env:
+      - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: opensearch-initial-admin-password
+            key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
   dashboards:
     enable: true
     replicas: 1
