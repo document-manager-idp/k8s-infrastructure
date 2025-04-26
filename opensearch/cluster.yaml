@@ -27,7 +27,7 @@ spec:
     config:
       opensearch_dashboards.yml: |
         server.basePath: "/dashboard"
-        server.rewriteBasePath: true
+        server.rewriteBasePath: false
   confMgmt:
     smartScaler: true
   nodePools:
