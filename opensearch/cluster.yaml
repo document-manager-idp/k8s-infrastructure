@@ -7,33 +7,48 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"      # sync after the operator
 spec:
   general:
-    version: latest                        # bump at will; operator rolls forward :contentReference[oaicite:1]{index=1}
-    serviceName: opensearch-service                # generates headless & ClusterIP svc
+    version: latest
     httpPort: 9200
-    drainDataNodes: true
-    env:
-      - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: opensearch-initial-admin-password
-            key: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+    vendor: opensearch
+    serviceName: opensearch-service
   dashboards:
+    opensearchCredentialsSecret:
+      name: admin-credentials-secret
+    version: latest
     enable: true
     replicas: 1
-    version: latest
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "1Gi"
+        cpu: "500m"
+  confMgmt:
+    smartScaler: true
   nodePools:
-    - component: cluster-manager
+    - component: masters
       replicas: 3
-      roles: ["cluster_manager"]
-      diskSize: 10Gi
-    - component: data
-      replicas: 2
-      roles: ["data","ingest","remote_cluster_client"]
-      diskSize: 20Gi
+      diskSize: "30Gi"
+      nodeSelector:
+      resources:
+        requests:
+          memory: "2Gi"
+          cpu: "500m"
+        limits:
+          memory: "2Gi"
+          cpu: "500m"
+      roles:
+        - "cluster_manager"
+        - "data"
   security:
     config:
-      # reuse the secret you already create in README
       adminCredentialsSecret:
         name: admin-credentials-secret
       securityConfigSecret:
         name: securityconfig-secret
+    tls:
+      transport:
+        generate: true
+      http:
+        generate: true
