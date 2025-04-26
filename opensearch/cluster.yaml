@@ -27,7 +27,7 @@ spec:
   security:
     config:
       # reuse the secret you already create in README
-      adminCredentialsSecretName:
+      adminCredentialsSecret:
         name: admin-credentials-secret
       securityConfigSecret:
         name: securityconfig-secret
