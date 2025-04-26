@@ -28,6 +28,6 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: opensearch-dashboards
+                name: opensearch-service-dashboards
                 port:
                   number: 5601
