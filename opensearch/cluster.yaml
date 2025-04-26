@@ -24,10 +24,7 @@ spec:
       limits:
         memory: "1Gi"
         cpu: "500m"
-    config:
-      opensearch_dashboards.yml: |
-        server.basePath: "/dashboard"
-        server.rewriteBasePath: false
+    basePath: "/dashboard"
   confMgmt:
     smartScaler: true
   nodePools:
