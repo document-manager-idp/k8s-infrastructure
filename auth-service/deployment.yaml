@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: ghcr.io/document-manager-idp/auth-service:ce508cc14d2554500bf239e3a07fb86f2266cbad
+          image: ghcr.io/document-manager-idp/auth-service:b9ac1e965b081bc9b788bd7046335d9d3d245592
           ports:
             - containerPort: 3000
           env:
