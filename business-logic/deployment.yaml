@@ -32,3 +32,5 @@ spec:
               value: database-service
             - name: DB_PORT
               value: "5700"
+            - name: PREFIX
+              value: /api
