@@ -6,4 +6,5 @@ resources:
   - db-service/deployment.yaml
   - db-service/service.yaml
   - opensearch/cluster.yaml
+  - opensearch/security-config.yaml
   - ingress.yaml
