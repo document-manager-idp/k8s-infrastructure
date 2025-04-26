@@ -24,7 +24,7 @@ spec:
                 name: business-logic-service
                 port:
                   number: 5000
-          - path: /dashboard/?(.*)
+          - path: /dashboard(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
