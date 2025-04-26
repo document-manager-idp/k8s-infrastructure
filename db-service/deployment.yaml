@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: database-service
-          image: ghcr.io/document-manager-idp/db-service:10f792e186bc0c7b460c6f856f8c88ab629af1ad
+          image: ghcr.io/document-manager-idp/db-service:a68b305122abece12f16c677ea2ef02ef065409d
           ports:
             - containerPort: 5700
           env:
