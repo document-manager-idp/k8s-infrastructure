@@ -7,14 +7,14 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"      # sync after the operator
 spec:
   general:
-    version: latest
+    version: 2.14
     httpPort: 9200
     vendor: opensearch
     serviceName: opensearch-service
   dashboards:
     opensearchCredentialsSecret:
       name: admin-credentials-secret
-    version: latest
+    version: 2.14
     enable: true
     replicas: 1
     resources:
