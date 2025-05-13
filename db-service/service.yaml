@@ -8,4 +8,5 @@ spec:
   ports:
     - port: 5700
       targetPort: 5700
+      name: http
   type: ClusterIP

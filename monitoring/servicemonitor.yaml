@@ -1,0 +1,23 @@
+# monitoring/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: document-manager
+  labels:
+    app: document-manager
+spec:
+  namespaceSelector:
+    matchNames:
+      - default        # where your services live
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - auth-service
+          - business-logic-service
+          - database-service
+  endpoints:
+    - port: http      # make sure your Services have port:name "http"
+      path: /metrics  # your apps must expose a metrics endpoint
+      interval: 30s

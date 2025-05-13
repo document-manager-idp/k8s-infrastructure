@@ -7,4 +7,5 @@ resources:
   - db-service/service.yaml
   - opensearch/cluster.yaml
   - opensearch/security-config.yaml
+  - monitoring/servicemonitor.yaml
   - ingress.yaml

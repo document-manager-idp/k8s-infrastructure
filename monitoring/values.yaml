@@ -1,0 +1,18 @@
+# monitoring/values.yaml
+grafana:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - grafana.example.com
+    path: /
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+  adminUser: admin
+  adminPassword: admin
+
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelector:
+      matchLabels:
+        app: document-manager

@@ -66,3 +66,12 @@ To remove everything that was installed by this repo:
 ```bash
 argocd app delete document-manager     # or delete via UI
 ```
+```bash
+helm install monitoring \
+   prometheus-community/kube-prometheus-stack \
+   --namespace monitoring \
+   --values monitoring/values.yaml
+   
+kubectl port-forward -n monitoring svc/monitoring-kube-prometheus-prometheus 9090:9090
+kubectl port-forward -n monitoring svc/monitoring-grafana 3000:80
+```

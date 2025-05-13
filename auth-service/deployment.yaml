@@ -17,6 +17,12 @@ spec:
           image: ghcr.io/document-manager-idp/auth-service:665d575426d6bb579322b9cfdd76b88a2a5c4930
           ports:
             - containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 15
           env:
             - name: NODE_ENV
               value: production
