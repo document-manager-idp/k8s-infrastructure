@@ -42,6 +42,8 @@ spec:
       roles:
         - "cluster_manager"
         - "data"
+        - "ingest"
+        - "ml"
   security:
     config:
       adminCredentialsSecret:
