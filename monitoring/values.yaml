@@ -1,13 +1,12 @@
-# monitoring/values.yaml
 grafana:
   ingress:
     enabled: true
-    ingressClassName: nginx
-    hosts:
-      - grafana.example.com
-    path: /
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /
+  service:
+      type: ClusterIP
+      port: 3000           # match your ingress backend port
+      targetPort: 3000     # Grafana container listens on 3000
+  rootUrl: "%(protocol)s://%(domain)s/grafana"
+  serveFromSubPath: true
   adminUser: admin
   adminPassword: admin
 
