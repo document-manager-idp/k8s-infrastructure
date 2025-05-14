@@ -34,4 +34,4 @@ spec:
               service:
                 name: monitoring-grafana
                 port:
-                  number: 80
+                  number: 3000
