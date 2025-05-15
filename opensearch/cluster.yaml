@@ -29,7 +29,7 @@ spec:
     smartScaler: true
   nodePools:
     - component: masters
-      replicas: 1
+      replicas: 2
       diskSize: "10Gi"
       nodeSelector:
       resources:
@@ -43,7 +43,7 @@ spec:
         - "cluster_manager"
         - "data"
     - component: nodes
-      replicas: 1
+      replicas: 2
       diskSize: "10Gi"
       nodeSelector:
       resources:
