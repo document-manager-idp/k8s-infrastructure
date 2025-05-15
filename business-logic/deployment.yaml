@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: business-logic-service
-          image: ghcr.io/document-manager-idp/business-logic:2234fd3131526c099bdb92d0af323a8f3291fb36
+          image: ghcr.io/document-manager-idp/business-logic:53cdafa442722315c09c33b266171dc354fbf5ee
           ports:
             - containerPort: 5000
           env:
