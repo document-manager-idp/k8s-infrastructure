@@ -8,7 +8,7 @@ metadata:
 spec:
   namespaceSelector:
     matchNames:
-      - default        # where your services live
+      - default
   selector:
     matchExpressions:
       - key: app
