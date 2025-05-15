@@ -29,8 +29,8 @@ spec:
     smartScaler: true
   nodePools:
     - component: masters
-      replicas: 2
-      diskSize: "30Gi"
+      replicas: 1
+      diskSize: "10Gi"
       nodeSelector:
       resources:
         requests:
@@ -42,6 +42,20 @@ spec:
       roles:
         - "cluster_manager"
         - "data"
+    - component: nodes
+      replicas: 1
+      diskSize: "10Gi"
+      nodeSelector:
+      resources:
+        requests:
+          memory: "2Gi"
+          cpu: "500m"
+        limits:
+          memory: "2Gi"
+          cpu: "500m"
+      roles:
+        - "data"
+        - "ingest"
   security:
     config:
       adminCredentialsSecret:
