@@ -28,10 +28,3 @@ spec:
                 name: opensearch-service-dashboards
                 port:
                   number: 5601
-          - path: /grafana
-            pathType: Prefix
-            backend:
-              service:
-                name: monitoring-grafana
-                port:
-                  number: 3000
