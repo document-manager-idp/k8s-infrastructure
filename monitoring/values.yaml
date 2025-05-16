@@ -8,6 +8,25 @@ grafana:
   adminUser: admin
   adminPassword: admin
 
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'dashboards'
+          orgId: 1
+          folder: 'Kubernetes'
+          type: file
+          disableDeletion: true
+          editable: true
+          options:
+            path:  /var/lib/grafana/dashboards
+  dashboards:
+    default:
+      auth-service:
+        file: dashboards/auth-service.json
+      business-service:
+        file: dashboards/business-service.json
+
   grafana.ini:
     server:
       domain: localhost
